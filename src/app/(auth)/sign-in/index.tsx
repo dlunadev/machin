@@ -1,4 +1,5 @@
 import { Machin } from "@/assets/svg";
+import { sign_in } from "@/sdk/auth/auth";
 import { Button, Container, Input, KeyboardContainer } from "@/src/components";
 import { Text } from "@/src/components/text/text.component";
 import { Center } from "@/src/components/ui/center";
@@ -16,16 +17,32 @@ function SignIn() {
   const [loading, setLoading] = useState(false);
   const { showToast } = useCustomToast();
 
-  const fakeRequest = (values: { email: string; password: string }) => {
-    setLoading(true);
+  const fakeRequest = async (values: { email: string; password: string }) => {
+    try {
+      setLoading(true);
 
-    setTimeout(() => {
-      setLoading(false);
+      const resp = await sign_in(values.email, values.password);
+
+      if (resp.error) {
+        showToast({
+          title: "Error de inicio de sesión",
+          children: resp.error.message,
+        });
+        return;
+      }
+
       showToast({
         title: "Inicio de sesión",
         children: `Correo: ${values.email}\nContraseña: ${values.password}`,
       });
-    }, 500);
+    } catch (err: any) {
+      showToast({
+        title: "Error inesperado",
+        children: err.message || "No se pudo iniciar sesión. Intenta de nuevo.",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
