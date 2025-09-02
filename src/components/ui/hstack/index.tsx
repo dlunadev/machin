@@ -11,7 +11,7 @@ const HStack = React.forwardRef<React.ComponentRef<typeof View>, IHStackProps>(
     return (
       <View
         className={hstackStyle({
-          space,
+          space: space as 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | undefined,
           reversed: reversed as boolean,
           class: className,
         })}
