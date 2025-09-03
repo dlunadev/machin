@@ -9,7 +9,7 @@ export const Container = ({ children }: { children: ReactNode }) => {
 
   return (
     <View
-      className={`flex flex-1 px-8`}
+      className={`flex flex-1 px-6`}
       style={[{ paddingTop: insets.top }, styles.container]}
     >
       {children}
