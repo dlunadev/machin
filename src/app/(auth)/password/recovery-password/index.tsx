@@ -79,7 +79,7 @@ function RecoveryPassword() {
                   }
                 />
 
-                <Button onPress={() => router.push(AuthRoutes.CONFIRMATION as unknown as RelativePathString)} loading={loading}>
+                <Button onPress={() => router.push(AuthRoutes.NEW_PASSWORD as unknown as RelativePathString)} loading={loading}>
                   Enviar
                 </Button>
               </View>
