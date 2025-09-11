@@ -4,7 +4,7 @@ import { KeyboardContainerProps } from './keyboard.type';
 import styles from './style';
 
 export const KeyboardContainer = (props: KeyboardContainerProps) => {
-  const { children, keyboardShouldPersistTaps = 'handled', extraScrollHeight = 0, enableOnAndroid = false, extraHeight = 0 } = props;
+  const { children, keyboardShouldPersistTaps = 'handled', extraScrollHeight = 0, enableOnAndroid = true, extraHeight = 0 } = props;
 
   return (
     <KeyboardAwareScrollView

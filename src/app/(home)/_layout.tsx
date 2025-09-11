@@ -3,7 +3,7 @@ import { Colors } from "@/src/constants/Colors";
 import { Stack } from "expo-router";
 import React from "react";
 
-export default function TabLayout() {
+export default function _layout() {
   return (
     <Stack
       screenOptions={{

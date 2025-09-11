@@ -7,8 +7,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     flexDirection: "row",
-    paddingHorizontal: 16,
-    marginTop: 8,
+    paddingRight: 8,
   },
   slot: { 
     alignItems: 'center',
