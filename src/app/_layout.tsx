@@ -1,40 +1,70 @@
+import { restoreSession } from '@/sdk/utils/shared/restore_session';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SWRConfig } from 'swr';
 import '../../global.css';
 import { GluestackUIProvider } from '../components/ui/gluestack-ui-provider';
-
+import { AuthRoutes, HomeRoutes } from '../utils/enum/routes';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const router = useRouter();
   const [loaded] = useFonts({
     SpaceMono: require('../../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
+  const [redirected, setRedirected] = useState(false);
+
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    const init = async () => {
+      if (!loaded) return;
+
+      const session = await restoreSession();
+
+      if (!redirected) {
+        setRedirected(true);
+
+        if (session) {
+          router.replace(HomeRoutes.HOME);
+        } else {
+          router.replace(AuthRoutes.SIGN_IN);
+        }
+
+        SplashScreen.hideAsync();
+      }
+    };
+
+    init();
+  }, [loaded, redirected, router]);
 
   if (!loaded) {
     return null;
   }
 
   return (
-    <GluestackUIProvider mode="light">
-      <SafeAreaProvider>
-        <Stack initialRouteName='(auth)'>
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style='dark' />
-      </SafeAreaProvider>
-    </GluestackUIProvider>
+    <SWRConfig
+      value={{
+        revalidateOnFocus: true,
+        shouldRetryOnError: false,
+        dedupingInterval: 5000,
+      }}
+    >
+      <GluestackUIProvider mode="light">
+        <SafeAreaProvider>
+          <Stack initialRouteName="(auth)">
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="(home)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="dark" />
+        </SafeAreaProvider>
+      </GluestackUIProvider>
+    </SWRConfig>
   );
 }

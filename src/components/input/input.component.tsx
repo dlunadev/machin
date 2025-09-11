@@ -63,7 +63,7 @@ export const Input: React.FC<CustomInputProps> = (props) => {
         {...rest}
         secureTextEntry={secureTextEntry}
         placeholderTextColor={Colors.TERTIARY}
-        style={{ backgroundColor, fontSize: 16, flex: 1 }}
+        style={{ backgroundColor, fontSize: 16, flex: 1, color: Colors.TEXT }}
       />
 
       {rightIcon && (

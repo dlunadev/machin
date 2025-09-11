@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
   input: {
     color: Colors.BLACK,
     fontSize: 16,
+    width: '90%'
   },
   loadingIcon: {
     marginRight: 8,

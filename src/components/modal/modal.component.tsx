@@ -17,6 +17,7 @@ export type ModalProps = {
   showFooter?: boolean;
   confirmText?: string;
   cancelText?: string;
+  show_cancel_button?: boolean;
   onConfirm?: () => void;
   onCancel?: () => void;
 };
@@ -30,6 +31,7 @@ export const Modal = ({
   showFooter = false,
   confirmText = 'Confirmar',
   cancelText = 'Cancelar',
+  show_cancel_button = false,
   onConfirm,
   onCancel,
 }: ModalProps) => {
@@ -54,9 +56,10 @@ export const Modal = ({
         </ModalBody>
         {showFooter && (
           <HStack className="gap-2 mt-4">
+            {show_cancel_button && 
             <Button onPress={onCancel ?? onClose} stretch outlined>
               {cancelText}
-            </Button>
+            </Button>}
             <Button onPress={onConfirm ?? onClose} stretch>
               {confirmText}
             </Button>
@@ -66,19 +69,3 @@ export const Modal = ({
     </GSModal>
   );
 };
-
-// Ejemplo de uso:
-// const [open, setOpen] = React.useState(false)
-// <>
-//   <Button onPress={() => setOpen(true)}><ButtonText>Abrir</ButtonText></Button>
-//   <Modal
-//     isOpen={open}
-//     onClose={() => setOpen(false)}
-//     title="Título del modal"
-//     description="Descripción corta"
-//     showFooter
-//     onConfirm={() => console.log('Confirmado')}
-//   >
-//     <Text>Contenido dentro del modal</Text>
-//   </Modal>
-// </>

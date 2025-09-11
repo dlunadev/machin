@@ -1,6 +1,6 @@
 import { AuthError, Session, User } from "@supabase/supabase-js";
-import { deleteToken, saveToken } from "../shared/session_storage";
-import { supabase } from "../supabase/config";
+import { supabase } from "../../supabase/config";
+import { deleteToken, saveToken } from "../../utils/shared/session_storage";
 
 type AuthResponse = {
   data: {
@@ -26,6 +26,22 @@ export const sign_out = async () => {
   const { error } = await supabase.auth.signOut();
   if (error) throw error;
 };
+
+export const recovery_password = async (email: string) => {
+  const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+
+  if(error) throw error;
+
+  return data;
+}
+
+export const update_password = async (password: string) => {
+  const { data, error } = await supabase.auth.updateUser({ password });
+ 
+  if (error) throw error;
+ 
+  return data;
+}
 
 supabase.auth.onAuthStateChange((_event, session) => {
   if (session) {

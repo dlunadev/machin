@@ -6,9 +6,12 @@ export enum AuthRoutes {
   'NEW_PASSWORD' = '/(auth)/password/new-password'
 }
 
+export enum HomeRoutes {
+  HOME = '/(home)'
+}
+
 export enum AuthRoutesKey {
-  HOME = "index",
-  SIGN_IN = "sign-in/index",
+  SIGN_IN = "index",
   RECOVERY_PASSWORD = "password/recovery-password/index",
   SEND_EMAIL = "password/send-email/index",
   CONFIRMATION = "password/confirmation/index",

@@ -1,0 +1,1 @@
+export type Pagination = { page: number, search_term?: string };

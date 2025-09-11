@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "machin",
+    "name": "Machin",
     "slug": "machin",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,14 +9,24 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Necesitamos tu ubicación mientras usas la app",
+        "NSLocationAlwaysUsageDescription": "Necesitamos tu ubicación siempre"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION"
+      ],
+      "edgeToEdgeEnabled": true,
+      "package": "com.novexisconsulting.machin"
     },
     "web": {
       "bundler": "metro",
@@ -34,14 +44,20 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-font",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
       "SUPABASE_URL": "https://ylhyjqhjuswplokbwkql.supabase.co",
-      "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlsaHlqcWhqdXN3cGxva2J3a3FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI1OTM1MjIsImV4cCI6MjA2ODE2OTUyMn0.7lhh2psVwxXSQ7TBuBuoslom_hgfIXiJEY4n65dtxBQ"
+      "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlsaHlqcWhqdXN3cGxva2J3a3FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI1OTM1MjIsImV4cCI6MjA2ODE2OTUyMn0.7lhh2psVwxXSQ7TBuBuoslom_hgfIXiJEY4n65dtxBQ",
+      "router": {},
+      "eas": {
+        "projectId": "bfc37aa3-5923-4d85-8e34-709a780b2a40"
+      }
     }
   }
 }

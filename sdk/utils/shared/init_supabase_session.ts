@@ -1,4 +1,4 @@
-import { supabase } from "../supabase/config";
+import { supabase } from "../../supabase/config";
 import { getToken } from "./session_storage";
 
 export const initSupabaseSession = async () => {

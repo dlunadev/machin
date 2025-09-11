@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 47,
+    minHeight: 47,
   },
   outlined: {
     backgroundColor: 'transparent',

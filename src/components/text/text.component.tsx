@@ -25,8 +25,9 @@ export const Text = (props: RNTextProps & TextProps) => {
   const textDecoration = underline ? "underline" : "none";
 
   let displayedText = children as string;
+
   if (maxLength && !isExpanded && displayedText.length > maxLength) {
-    displayedText = `${displayedText.substring(0, maxLength)}`;
+    displayedText = displayedText.substring(0, maxLength);
   }
 
   const handleToggleExpand = () => {
@@ -52,8 +53,8 @@ export const Text = (props: RNTextProps & TextProps) => {
     >
       {displayedText}
       {maxLength && !isExpanded && (children as string).length > maxLength && (
-        <RNText onPress={() => handleToggleExpand()} style={styles.more}>
-          ...mas
+        <RNText style={styles.more}>
+          ...
         </RNText>
       )}
     </RNText>

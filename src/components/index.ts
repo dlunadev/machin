@@ -1,3 +1,4 @@
+export * from './action-sheet/actionsheet.component';
 export * from './badge/badge.component';
 export * from './button/button.component';
 export * from './container/container.component';

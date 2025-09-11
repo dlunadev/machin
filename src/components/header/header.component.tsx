@@ -1,5 +1,5 @@
 import { Logout, Machin } from "@/assets/svg";
-import { sign_out } from "@/sdk/auth/auth";
+import { sign_out } from "@/sdk/services/auth/auth";
 import { Colors } from "@/src/constants/Colors";
 import { scaleSize } from "@/src/helpers/scale-size";
 import { useInsets } from "@/src/hooks/utils/useInsets";
