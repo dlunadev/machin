@@ -30,7 +30,9 @@ import { Checkbox, CheckboxIcon, CheckboxIndicator } from '@/src/components/ui/c
 import { Colors } from '@/src/constants/Colors';
 import { formatDate, formatTime } from '@/src/helpers/date-formatter';
 import { useClients, useMe, useShift, useShiftActive, useZones } from '@/src/hooks/services';
+import { useInsets } from '@/src/hooks/utils/useInsets';
 import { useLocation } from '@/src/hooks/utils/useLocation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, AppState, AppStateStatus, FlatList, Pressable, View } from 'react-native';
 
@@ -40,6 +42,7 @@ const { create: create_location } = new LocationAdapter();
 const { create_clients_shift } = new ShiftClientAdapter();
 
 export default function Home() {
+  const insets = useInsets();
   const [shiftId, setShiftId] = useState<string | null>('');
   const [state, setState] = useState<ShiftStatus>(ShiftStatus.IDLE);
   const [zone, setZone] = useState<Zone | null>(null);
@@ -49,11 +52,12 @@ export default function Home() {
   const [appState, setAppState] = useState<AppStateStatus>(AppState.currentState);
   const [showSheet, setShowSheet] = useState(false);
   const [clientsOrder, setClientsOrder] = useState<{ client_id: string; order: number }[]>([]);
-  const { shift, isLoading: isLoadingShift, mutate } = useShift(shiftId as string);
+  const { shift, mutate } = useShift(shiftId as string);
   const { zones, isLoading, loadMore } = useZones(10, search);
   const { clients, isLoading: isLoadingClients, loadMore: loadMoreClients } = useClients(10, searchClient, shift?.zone_id);
-  const { user, isLoading: isLoadingUser } = useMe();
+  const { user } = useMe();
   const [finalizeShift, setFinalizeShift] = useState<WebhookShift | null>(null);
+  const [shiftLoader, setShiftLoader] = useState(false);
   const { location, modalShown, openSettings } = useLocation((coords) => {
     if (shiftId && shift?.status !== ShiftStatus.FINISHED) {
       create_location({
@@ -68,6 +72,7 @@ export default function Home() {
   const { active_shift } = useShiftActive(user?.id as string);
 
   const handleStart = async () => {
+    setShiftLoader(true);
     if (!zone) return;
     const shift = await create({
       seller_id: user?.id as string,
@@ -81,6 +86,7 @@ export default function Home() {
 
     setShiftId(shift.id as string);
     setState(ShiftStatus.STARTED);
+    setShiftLoader(false);
   };
 
   const toggleClient = (item: Client) => {
@@ -133,6 +139,7 @@ export default function Home() {
       create_clients_shift(shift?.id!, clientsOrder);
       setShowSheet(false);
       setClientsOrder([]);
+      AsyncStorage.removeItem('shift_id');
     } catch (err) {
       console.error('Error al finalizar shift:', err);
     } finally {
@@ -140,7 +147,7 @@ export default function Home() {
     }
   };
 
-  if (isLoadingShift && isLoadingUser) {
+  if (!shift && !user) {
     return (
       <Center className="flex-1 bg-white">
         <ActivityIndicator size="large" color={Colors.PRIMARY} />
@@ -181,7 +188,7 @@ export default function Home() {
                 setSearch={setSearch}
               />
             </VStack>
-            <Button onPress={handleStart} icon={<Play width={16} color={Colors.WHITE} />} left_icon disabled={!Boolean(zone)}>
+            <Button onPress={handleStart} icon={<Play width={16} color={Colors.WHITE} />} left_icon disabled={!Boolean(zone) || shiftLoader} loading={shiftLoader}>
               Iniciar
             </Button>
           </>
@@ -289,7 +296,7 @@ export default function Home() {
               </View>
 
               <HStack className="w-full justify-around">
-                <SummaryBlock value="03h 30m 50s" label="Horas activas" />
+                <SummaryBlock value={finalizeShift?.active_hours?.toString()} label="Horas activas" />
                 <SummaryBlock value={`${finalizeShift?.total_distance || 0}km`} label="Recorrido total" />
               </HStack>
 
@@ -376,7 +383,9 @@ export default function Home() {
           }
           showsVerticalScrollIndicator={false}
         />
-        <Button onPress={finish_shift}>Finalizar Turno</Button>
+        <Button onPress={finish_shift} style={{ marginBottom: insets.bottom + 16 }}>
+          Finalizar Turno
+        </Button>
       </ActionSheet>
     </Container>
   );

@@ -34,8 +34,17 @@ function SignIn() {
         return;
       }
 
-      router.replace(HomeRoutes.HOME);
+      router.replace(HomeRoutes.HOME as unknown as RelativePathString);
     } catch (err: any) {
+      if (err.message.toLowerCase().includes('invalid')) {
+        showToast({
+          title: 'Error de inicio de sesión',
+          children: 'Credenciales o email inexistentes. Intenta de nuevo.',
+        });
+
+        return;
+      }
+
       showToast({
         title: 'Error inesperado',
         children: err.message || 'No se pudo iniciar sesión. Intenta de nuevo.',
@@ -70,7 +79,7 @@ function SignIn() {
                     value={values.email}
                     touched={touched.email}
                     error={touched.email && errors.email ? errors.email : undefined}
-                    autoCapitalize='none'
+                    autoCapitalize="none"
                   />
                   <Input
                     label="Contraseña"

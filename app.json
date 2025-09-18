@@ -23,9 +23,15 @@
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
+        "FOREGROUND_SERVICE",
         "ACCESS_BACKGROUND_LOCATION"
       ],
       "edgeToEdgeEnabled": true,
+      "foregroundService": {
+        "notificationTitle": "Seguimiento activo",
+        "notificationBody": "Estamos registrando tu ubicación",
+        "notificationColor": "#FF0000"
+      },
       "package": "com.novexisconsulting.machin"
     },
     "web": {
