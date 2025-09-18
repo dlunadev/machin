@@ -39,7 +39,7 @@ export const TurnHeader = (props: TurnHeaderProps) => {
         </HStack>
         <View className="flex flex-row gap-1 items-center">
           <Pin />
-          <Text size={14} weight={400} maxLength={20}>
+          <Text size={14} weight={400} maxLength={state !== ShiftStatus.FINISHED ? 20 : undefined}>
             {zone?.name ?? 'Sin dirección'}
           </Text>
         </View>

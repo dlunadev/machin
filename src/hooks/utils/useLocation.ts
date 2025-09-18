@@ -1,9 +1,28 @@
 import { LocationAdapter } from "@/sdk/infraestructure/location/location.supabase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as IntentLauncher from "expo-intent-launcher";
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AppState, AppStateStatus, Linking, Platform } from "react-native";
+
+async function ensureBatteryOptimizationHandled() {
+  if (Platform.OS !== "android") return;
+
+  const alreadyConfirmed = await AsyncStorage.getItem("batteryWhitelistConfirmed");
+  if (alreadyConfirmed === "true") {
+    console.log("🔋 Batería ya confirmada por el usuario");
+    return;
+  }
+
+  console.log("⚠️ Redirigiendo a ajustes de batería");
+  await IntentLauncher.startActivityAsync(
+    "android.settings.IGNORE_BATTERY_OPTIMIZATION_SETTINGS"
+  );
+
+  await AsyncStorage.setItem("batteryWhitelistConfirmed", "true");
+}
+
 
 const TASK_NAME = "BACKGROUND_LOCATION";
 const { create: create_location } = new LocationAdapter();
@@ -14,8 +33,6 @@ TaskManager.defineTask(
     if (error) {
       return;
     }
-
-    console.log(data, error);
 
     if (data) {
       const shift_id = await AsyncStorage.getItem("shift_id");
@@ -38,9 +55,9 @@ TaskManager.defineTask(
         try {
           await create_location({
             shift_id: shift_id || "",
-            latitude: String(coords.latitude),
-            longitude: String(coords.longitude),
-            accuracy: String(coords.accuracy),
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+            accuracy: coords.accuracy || 0,
           });
 
           console.log("Ubicación enviada al servidor");
@@ -63,6 +80,7 @@ async function startBackgroundLocationUpdates() {
       foregroundService: {
         notificationTitle: "Tracking activo",
         notificationBody: "La app está registrando tu ubicación en segundo plano",
+        notificationColor: "#FF0000",
       },
     });
     console.log("Background location updates started");
@@ -158,13 +176,13 @@ export const useLocation = (
   useEffect(() => {
     const init = async () => {
       const granted = await checkPermission();
-      if (!granted) await requestPermissionAndSubscribe();
+      if (!granted) {
+        await requestPermissionAndSubscribe();
+      }
+
+      await ensureBatteryOptimizationHandled();
     };
     init();
-
-    return () => {
-      subscriberRef.current?.remove();
-    };
   }, [checkPermission, requestPermissionAndSubscribe]);
 
   useEffect(() => {

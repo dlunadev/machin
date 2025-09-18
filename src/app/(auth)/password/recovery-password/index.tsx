@@ -4,7 +4,6 @@ import { ArrowLeftIcon, Button, Container, HStack, Icon, Input, KeyboardContaine
 import { Text } from '@/src/components/text/text.component';
 import { Center } from '@/src/components/ui/center';
 import { Colors } from '@/src/constants/Colors';
-import { useCustomToast } from '@/src/hooks/utils/useToast';
 import { AuthRoutes } from '@/src/utils/enum/routes';
 import { recovery_password_schema } from '@/src/utils/schemas/auth/recovery-password.schema';
 import { useRouter } from 'expo-router';
@@ -17,27 +16,16 @@ const { recovery_password } = new AuthSupabaseAdapter();
 function RecoveryPassword() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const { showToast } = useCustomToast();
-
-  // const fakeRequest = (values: { email: string }) => {
-  //   setLoading(true);
-
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //     showToast({
-  //       title: "Inicio de sesión",
-  //       children: `Correo: ${values.email}\nContraseña:`,
-  //     });
-  //   }, 500);
-  // };
 
   const handleSubmit = async (values: { email: string }) => {
+    setLoading(true);
     await recovery_password(values.email);
 
     router.push({
       pathname: AuthRoutes.SEND_EMAIL,
       params: { email: values.email },
     });
+    setLoading(false);
   };
 
   return (
