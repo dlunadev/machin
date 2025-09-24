@@ -5,8 +5,8 @@ import { VStack } from '../ui/vstack';
 export const SummaryBlock = ({ value, label }: { value: string; label: string }) => (
   <VStack className="gap-1 items-center">
     <Text>
-      {value.includes(':') 
-        ? value.split(':').map((part, index) => {
+      {value?.includes(':') 
+        ? value?.split(':').map((part, index) => {
             const suffix = index === 0 ? 'h' : index === 1 ? 'm' : 's';
             return (
               <React.Fragment key={index}>
