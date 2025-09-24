@@ -1,108 +1,82 @@
 import { LocationAdapter } from "@/sdk/infraestructure/location/location.supabase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as IntentLauncher from "expo-intent-launcher";
-import * as Location from "expo-location";
-import * as TaskManager from "expo-task-manager";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AppState, AppStateStatus, Linking, Platform } from "react-native";
+import { AppState, AppStateStatus, Linking, Permission, PermissionsAndroid, Platform } from "react-native";
+import BackgroundService from "react-native-background-actions";
+import Geolocation from "react-native-geolocation-service";
 
-async function ensureBatteryOptimizationHandled() {
-  if (Platform.OS !== "android") return;
-
-  const alreadyConfirmed = await AsyncStorage.getItem("batteryWhitelistConfirmed");
-  if (alreadyConfirmed === "true") {
-    console.log("🔋 Batería ya confirmada por el usuario");
-    return;
-  }
-
-  console.log("⚠️ Redirigiendo a ajustes de batería");
-  await IntentLauncher.startActivityAsync(
-    "android.settings.IGNORE_BATTERY_OPTIMIZATION_SETTINGS"
-  );
-
-  await AsyncStorage.setItem("batteryWhitelistConfirmed", "true");
-}
-
-
-const TASK_NAME = "BACKGROUND_LOCATION";
 const { create: create_location } = new LocationAdapter();
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-TaskManager.defineTask(
-  TASK_NAME,
-  async ({ data, error }: TaskManager.TaskManagerTaskBody<any>) => {
-    if (error) {
-      return;
-    }
-
-    if (data) {
-      const shift_id = await AsyncStorage.getItem("shift_id");
-      console.log("background", shift_id);
-
-      const { locations } = data as { locations: Location.LocationObject[] };
-      const latest = locations[locations.length - 1];
-
-      if (latest) {
-        const coords = {
-          latitude: latest.coords.latitude,
-          longitude: latest.coords.longitude,
-          accuracy: latest.coords.accuracy,
-          timestamp: latest.timestamp,
-        };
-
-        console.log(">>> BACKGROUND_LOCATION_TASK <<<", coords);
-        console.log("Última ubicación en background:", coords);
-
-        try {
-          await create_location({
-            shift_id: shift_id || "",
-            latitude: coords.latitude,
-            longitude: coords.longitude,
-            accuracy: coords.accuracy || 0,
-          });
-
-          console.log("Ubicación enviada al servidor");
-        } catch (err) {
-          console.error("Error enviando ubicación:", err);
-        }
-      }
-    }
-  }
-);
-
-async function startBackgroundLocationUpdates() {
-  const hasStarted = await Location.hasStartedLocationUpdatesAsync(TASK_NAME);
-  if (!hasStarted) {
-    await Location.startLocationUpdatesAsync(TASK_NAME, {
-      accuracy: Location.Accuracy.Highest,
-      distanceInterval: 50,
-      timeInterval: 60000,
-      showsBackgroundLocationIndicator: true,
-      foregroundService: {
-        notificationTitle: "Tracking activo",
-        notificationBody: "La app está registrando tu ubicación en segundo plano",
-        notificationColor: "#FF0000",
-      },
-    });
-    console.log("Background location updates started");
+async function sendLocation(latitude: number, longitude: number, accuracy: number) {
+  const shift_id = (await AsyncStorage.getItem("shift_id")) || "";
+  if (!shift_id) return;
+  try {
+    await create_location({ shift_id, latitude, longitude, accuracy });
+  } catch (err) {
+    console.error("[BG_LOCATION] Error enviando ubicación:", err);
   }
 }
 
-export const useLocation = (
-  onLocationUpdate?: (coords: {
-    latitude: number;
-    longitude: number;
-    accuracy: number;
-  }) => void
-) => {
-  const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(
-    null
+const androidTrackingTask = async (taskData: any) => {
+  while (BackgroundService.isRunning()) {
+    Geolocation.getCurrentPosition(
+      (pos) => {
+        sendLocation(pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy)
+          .catch(err => console.error("[BG_LOCATION] Error sendLocation:", err));
+      },
+      (err) => console.error("[BG_LOCATION] Error Android Geolocation:", err),
+      { enableHighAccuracy: true, distanceFilter: 0 }
+    );
+    await sleep(30000);
+  }
+};
+
+const FOREGROUND_SERVICE_LOCATION =
+  "android.permission.FOREGROUND_SERVICE_LOCATION" as unknown as Permission;
+
+async function checkAndroidPermissions(): Promise<boolean> {
+  const fine = await PermissionsAndroid.check(
+    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
   );
+  const bg = await PermissionsAndroid.check(
+    PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION
+  );
+  const fgs = await PermissionsAndroid.check(FOREGROUND_SERVICE_LOCATION);
+
+  console.log('locations', fine, bg, fgs)
+  if (fine && bg && fgs) return true;
+
+  const fineReq = await PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+  );
+  const bgReq = await PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION
+  );
+
+  let fgsReq: string | undefined;
+  const androidVersion = Number(Platform.Version);
+  if (androidVersion >= 34) {
+    fgsReq = await PermissionsAndroid.request(FOREGROUND_SERVICE_LOCATION);
+  }
+
+  return (
+    fineReq === PermissionsAndroid.RESULTS.GRANTED &&
+    bgReq === PermissionsAndroid.RESULTS.GRANTED &&
+    (androidVersion < 34 || fgsReq === PermissionsAndroid.RESULTS.GRANTED)
+  );
+}
+
+
+export const useLocation = (onLocationUpdate?: (coords: { latitude: number; longitude: number; accuracy: number }) => void) => {
+  const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [modalShown, setModalShown] = useState(false);
   const [permissionGranted, setPermissionGranted] = useState(false);
-
-  const subscriberRef = useRef<Location.LocationSubscription | null>(null);
+  const watchId = useRef<number | null>(null);
   const appState = useRef<AppStateStatus>(AppState.currentState);
+
+  console.log(error)
 
   const openSettings = useCallback(() => {
     if (Platform.OS === "ios") {
@@ -112,121 +86,71 @@ export const useLocation = (
     }
   }, []);
 
-  const checkPermission = useCallback(async () => {
-    const { status } = await Location.getForegroundPermissionsAsync();
-    if (status === "granted") {
-      setPermissionGranted(true);
-      setError(null);
-      return true;
+  const startTracking = useCallback(async () => {
+    const granted = Platform.OS === 'android' ? await checkAndroidPermissions() : (await Geolocation.requestAuthorization('always')) === 'granted';
+
+    if (!granted) {
+      setError("Permiso de geolocalización denegado");
+      setModalShown(true);
+      return;
     }
-    setPermissionGranted(false);
-    return false;
-  }, []);
 
-  const requestPermissionAndSubscribe = useCallback(async () => {
-    if (permissionGranted) return true;
-
-    try {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      const { status: bgStatus } = await Location.requestBackgroundPermissionsAsync();
-
-      if (status !== "granted" && bgStatus !== "granted") {
-        setError("Permiso de geolocalización denegado");
-        setPermissionGranted(false);
-        return false;
-      }
-
-      startBackgroundLocationUpdates()
-      setPermissionGranted(true);
-      setError(null);
-      setModalShown(false);
-
-      const loc = await Location.getCurrentPositionAsync({});
-      const coords = {
-        latitude: loc.coords.latitude,
-        longitude: loc.coords.longitude,
-        accuracy: loc.coords.accuracy as number,
+    setError(null);
+    setModalShown(false);
+    setPermissionGranted(granted);
+    if (Platform.OS === "android") {
+      const options = {
+        taskName: "LocationTracking",
+        taskTitle: "Tracking activo",
+        taskDesc: "Enviando ubicación cada 30s",
+        taskIcon: { name: "ic_launcher", type: "mipmap" },
+        color: "#ff0000",
+        parameters: {},
+        linkingURI: "com.novexisconsulting.machin",
+        foregroundServiceType: "location",
       };
-
-      setLocation(coords);
-      onLocationUpdate?.(coords);
-
-      subscriberRef.current?.remove();
-
-      subscriberRef.current = await Location.watchPositionAsync(
-        { accuracy: Location.Accuracy.BestForNavigation, timeInterval: 30000, distanceInterval: 0 },
-        (loc) => {
-          const coords = {
-            latitude: loc.coords.latitude,
-            longitude: loc.coords.longitude,
-            accuracy: loc.coords.accuracy as number,
-          };
-          setLocation(coords);
-          onLocationUpdate?.(coords);
-        }
-      );
-
-      return true;
-    } catch (e) {
-      setError("Error obteniendo ubicación");
-      return false;
+      if (!BackgroundService.isRunning()) {
+        await BackgroundService.start(androidTrackingTask, options);
+      }
     }
-  }, [permissionGranted, onLocationUpdate]);
+
+    if (Platform.OS === "ios") {
+      if (watchId.current !== null) Geolocation.clearWatch(watchId.current);
+
+      watchId.current = Geolocation.watchPosition(
+        async (pos) => {
+          const coords = { latitude: pos.coords.latitude, longitude: pos.coords.longitude, accuracy: pos.coords.accuracy };
+          setLocation({ latitude: coords.latitude, longitude: coords.longitude });
+          onLocationUpdate?.(coords);
+          sendLocation(coords.latitude, coords.longitude, coords.accuracy).catch(console.error);
+        },
+        (err) => console.error("[BG_LOCATION] Error iOS Geolocation:", err),
+        { enableHighAccuracy: true, distanceFilter: 0, interval: 30000, fastestInterval: 15000 }
+      );
+    }
+  }, [onLocationUpdate]);
 
   useEffect(() => {
-    const init = async () => {
-      const granted = await checkPermission();
-      if (!granted) {
-        await requestPermissionAndSubscribe();
+    startTracking();
+    return () => {
+      if (Platform.OS === "android") {
+        BackgroundService.stop().catch(() => console.log("[BG_LOCATION] BackgroundService detenido"));
       }
-
-      await ensureBatteryOptimizationHandled();
+      if (Platform.OS === "ios" && watchId.current !== null) {
+        Geolocation.clearWatch(watchId.current);
+      }
     };
-    init();
-  }, [checkPermission, requestPermissionAndSubscribe]);
+  }, [startTracking]);
 
   useEffect(() => {
     const subscription = AppState.addEventListener("change", async (next) => {
       if (appState.current.match(/inactive|background/) && next === "active") {
-        const granted = await checkPermission();
-        if (granted) await requestPermissionAndSubscribe();
+        if (!permissionGranted) await startTracking();
       }
       appState.current = next;
     });
-
     return () => subscription.remove();
-  }, [checkPermission, requestPermissionAndSubscribe]);
-
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      const loc = await Location.getCurrentPositionAsync({});
-      const coords = {
-        latitude: loc.coords.latitude,
-        longitude: loc.coords.longitude,
-        accuracy: loc.coords.accuracy as number,
-      };
-
-      setLocation(coords);
-      onLocationUpdate?.(coords);
-    }, 30000);
-
-    return () => clearInterval(interval);
-  }, [onLocationUpdate]);
-
-  useEffect(() => {
-    if (error && !location) {
-      setModalShown(true);
-    } else if (!error || location) {
-      setModalShown(false);
-    }
-  }, [error, location]);
-
-  useEffect(() => {
-    (async () => {
-      const tasks = await TaskManager.getRegisteredTasksAsync();
-      console.log("Registered tasks:", tasks);
-    })();
-  }, []);
+  }, [permissionGranted, startTracking]);
 
   return { location, error, modalShown, openSettings };
 };
