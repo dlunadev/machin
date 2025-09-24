@@ -73,7 +73,7 @@ function SignIn() {
                 <View className="gap-4">
                   <Input
                     label="Correo electrónico"
-                    placeholder="juan_topo@gmail.com"
+                    placeholder="Escribe tu correo electrónico"
                     onChangeText={handleChange('email')}
                     onBlur={handleBlur('email')}
                     value={values.email}
