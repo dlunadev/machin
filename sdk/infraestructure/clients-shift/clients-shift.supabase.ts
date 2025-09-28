@@ -7,7 +7,7 @@ export class ShiftClientAdapter implements ShiftClientRepository {
   create(data: ShiftClients): Promise<ShiftClients> {
     throw new Error("Method not implemented.");
   }
-  async create_clients_shift(shift_id: string, payload: ShiftClients[]): Promise<ShiftClients> {
+  async create_clients_shift(shift_id: string, payload: ShiftClients[]): Promise<ShiftClients[]> {
     const { data, error } = await supabase
       .from('shift_clients')
       .insert(
