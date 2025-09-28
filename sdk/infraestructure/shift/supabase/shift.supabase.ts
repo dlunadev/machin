@@ -42,6 +42,10 @@ export class ShiftSupabaseAdapter implements ShiftRepository {
       ])
       .select()
 
+    if (!data) {
+      throw error;
+    }
+
     await AsyncStorage.setItem('shift_id', JSON.stringify(data[0].id));
 
     if (error) throw error;

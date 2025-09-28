@@ -3948,21 +3948,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@supabase/auth-js@npm:2.71.1":
-  version: 2.71.1
-  resolution: "@supabase/auth-js@npm:2.71.1"
+"@supabase/auth-js@npm:2.72.0":
+  version: 2.72.0
+  resolution: "@supabase/auth-js@npm:2.72.0"
   dependencies:
     "@supabase/node-fetch": ^2.6.14
-  checksum: 553a869ee52854ab5a98a596be680c9dbf7f195d9e1affe9831fc9e31f7729b09d2f9f3ff43845cdb3348e186cc6c0be3e30862e9ebee23f889f1ef14cf7985a
+  checksum: df6c906562a18b5a0ae809a36db24d830637016b3a61c64ac4085d10c43f639ff5665742d179a25395cd31c99e9959b07e7cbc30ff57ea11df54f4b5a6d8739d
   languageName: node
   linkType: hard
 
-"@supabase/functions-js@npm:2.4.6":
-  version: 2.4.6
-  resolution: "@supabase/functions-js@npm:2.4.6"
+"@supabase/functions-js@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@supabase/functions-js@npm:2.5.0"
   dependencies:
     "@supabase/node-fetch": ^2.6.14
-  checksum: 35c6444265182cbd9483b6edf018f6cd5529fabbdfb5ceadc3ac30da2ba7f2b5f27a84c7f5d710db524bab63b7ae2b8e1f59f687813f1be17cb367a609ef53f5
+  checksum: b0cc12b34961bc388f6bd003e006ac79da6f657271261b1f826559110da883013cd0e951b9872104ab02ac4adab8800300a433c23a8127f8ecf65913f759ca88
   languageName: node
   linkType: hard
 
@@ -3996,26 +3996,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@supabase/storage-js@npm:2.12.1":
-  version: 2.12.1
-  resolution: "@supabase/storage-js@npm:2.12.1"
+"@supabase/storage-js@npm:2.12.2":
+  version: 2.12.2
+  resolution: "@supabase/storage-js@npm:2.12.2"
   dependencies:
     "@supabase/node-fetch": ^2.6.14
-  checksum: fa946816bb5f96d9d08ca99dbfb16c99437c824e4032d091e4b2a94c65c96665741bc94feac12a6b4d9f8382db82c3bb313d14613eeaed66739259b4fbab21f4
+  checksum: 0b523c4c58453dfe06c6578a9b839b6332635fea97b3bb8f12b35f0d9fba9034c9d1f841a8fa4f047e7cf442a30c6b4010f5818aa0aeed44f5902de6a6a94ad3
   languageName: node
   linkType: hard
 
 "@supabase/supabase-js@npm:^2.1.0":
-  version: 2.57.4
-  resolution: "@supabase/supabase-js@npm:2.57.4"
+  version: 2.58.0
+  resolution: "@supabase/supabase-js@npm:2.58.0"
   dependencies:
-    "@supabase/auth-js": 2.71.1
-    "@supabase/functions-js": 2.4.6
+    "@supabase/auth-js": 2.72.0
+    "@supabase/functions-js": 2.5.0
     "@supabase/node-fetch": 2.6.15
     "@supabase/postgrest-js": 1.21.4
     "@supabase/realtime-js": 2.15.5
-    "@supabase/storage-js": 2.12.1
-  checksum: 19270c08f80a16a8d64ee3d02c86468e5d3c350b90ccf4f41fa2590ba75319f9aa516b1f70205f5871cdd769257a372f3d6abb17be5c4b093768fd0e8099c0f4
+    "@supabase/storage-js": 2.12.2
+  checksum: 68130af53e15f6e3a9eb4aeda02a4e758a6786b7d666718c09c8860106aa9f969df69aa6cc77076c35a7a42feddcf912b4fe0bafdccb07fc0a92267992ed1eeb
   languageName: node
   linkType: hard
 
@@ -5186,11 +5186,11 @@ __metadata:
   linkType: hard
 
 "baseline-browser-mapping@npm:^2.8.3":
-  version: 2.8.6
-  resolution: "baseline-browser-mapping@npm:2.8.6"
+  version: 2.8.8
+  resolution: "baseline-browser-mapping@npm:2.8.8"
   bin:
     baseline-browser-mapping: dist/cli.js
-  checksum: 113a89acbc7cbcb0ca191ff2498f33f64be3fac90b58bf7c192a325654a436fd7abe9ad98e24394d16c1be102b6e905483181182df69e79f090f180fac1bcbbc
+  checksum: d8cd9047549b7b54aed40f15036d9023e77a3919a1eea9db1bad9befb365321ff5bf580d8924de8ddf0022c037feb779f26d14bae4efb1dbc61042f3978d3311
   languageName: node
   linkType: hard
 
@@ -5433,9 +5433,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001741":
-  version: 1.0.30001743
-  resolution: "caniuse-lite@npm:1.0.30001743"
-  checksum: 9e203fe09158b011bd4a6707f6e5f9ad040e5b4093b12e2e047636a71d6e2e3bf5209aae42f213251cc812d9091188d7f1da7bd4785bc0b879beb98f9aa04ebc
+  version: 1.0.30001745
+  resolution: "caniuse-lite@npm:1.0.30001745"
+  checksum: a018bfbf6eda6e2728184cd39f3d0438cea04011893664fc7de19568d8e6f26cbc09e59460137bb2f4e792d1cdb7f1a48ad35f31a1c1388c1d7f74b3c889d35b
   languageName: node
   linkType: hard
 
@@ -6055,6 +6055,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"detect-libc@npm:^2.0.3":
+  version: 2.1.1
+  resolution: "detect-libc@npm:2.1.1"
+  checksum: fcda34a75f08a7f7857f469999b2cd76a2cb7bd591be4d069c63c4c6c2928c9bae2c82d4bfe8676920ce1acecf2cc1a6ef699b57a9456051e1eb0c770b19bb0d
+  languageName: node
+  linkType: hard
+
 "didyoumean@npm:^1.2.2":
   version: 1.2.2
   resolution: "didyoumean@npm:1.2.2"
@@ -6192,9 +6199,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.218":
-  version: 1.5.223
-  resolution: "electron-to-chromium@npm:1.5.223"
-  checksum: 1db07ef7552a0c8ac981befee3be77efea86bdec292043eb67ee344b9d85999429c78a3d3bf3b41687ae1b18e501cdfc0681841154773a732002772fffa057f1
+  version: 1.5.226
+  resolution: "electron-to-chromium@npm:1.5.226"
+  checksum: 4502fff2692bfe0d420133af43c5ae68b56327681e0638ca0c30c70a9f6071a748d9a778b6995365f1d3f853e99b67230ff294716908dc311ab40dfe15deba2b
   languageName: node
   linkType: hard
 
@@ -8569,9 +8576,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lightningcss-darwin-arm64@npm:1.30.1":
+  version: 1.30.1
+  resolution: "lightningcss-darwin-arm64@npm:1.30.1"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
 "lightningcss-darwin-x64@npm:1.27.0":
   version: 1.27.0
   resolution: "lightningcss-darwin-x64@npm:1.27.0"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lightningcss-darwin-x64@npm:1.30.1":
+  version: 1.30.1
+  resolution: "lightningcss-darwin-x64@npm:1.30.1"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
@@ -8583,9 +8604,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lightningcss-freebsd-x64@npm:1.30.1":
+  version: 1.30.1
+  resolution: "lightningcss-freebsd-x64@npm:1.30.1"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
 "lightningcss-linux-arm-gnueabihf@npm:1.27.0":
   version: 1.27.0
   resolution: "lightningcss-linux-arm-gnueabihf@npm:1.27.0"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"lightningcss-linux-arm-gnueabihf@npm:1.30.1":
+  version: 1.30.1
+  resolution: "lightningcss-linux-arm-gnueabihf@npm:1.30.1"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
@@ -8597,9 +8632,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lightningcss-linux-arm64-gnu@npm:1.30.1":
+  version: 1.30.1
+  resolution: "lightningcss-linux-arm64-gnu@npm:1.30.1"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
 "lightningcss-linux-arm64-musl@npm:1.27.0":
   version: 1.27.0
   resolution: "lightningcss-linux-arm64-musl@npm:1.27.0"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"lightningcss-linux-arm64-musl@npm:1.30.1":
+  version: 1.30.1
+  resolution: "lightningcss-linux-arm64-musl@npm:1.30.1"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
@@ -8611,9 +8660,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lightningcss-linux-x64-gnu@npm:1.30.1":
+  version: 1.30.1
+  resolution: "lightningcss-linux-x64-gnu@npm:1.30.1"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
 "lightningcss-linux-x64-musl@npm:1.27.0":
   version: 1.27.0
   resolution: "lightningcss-linux-x64-musl@npm:1.27.0"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"lightningcss-linux-x64-musl@npm:1.30.1":
+  version: 1.30.1
+  resolution: "lightningcss-linux-x64-musl@npm:1.30.1"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
@@ -8625,10 +8688,64 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lightningcss-win32-arm64-msvc@npm:1.30.1":
+  version: 1.30.1
+  resolution: "lightningcss-win32-arm64-msvc@npm:1.30.1"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
 "lightningcss-win32-x64-msvc@npm:1.27.0":
   version: 1.27.0
   resolution: "lightningcss-win32-x64-msvc@npm:1.27.0"
   conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lightningcss-win32-x64-msvc@npm:1.30.1":
+  version: 1.30.1
+  resolution: "lightningcss-win32-x64-msvc@npm:1.30.1"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lightningcss@npm:^1.27.0":
+  version: 1.30.1
+  resolution: "lightningcss@npm:1.30.1"
+  dependencies:
+    detect-libc: ^2.0.3
+    lightningcss-darwin-arm64: 1.30.1
+    lightningcss-darwin-x64: 1.30.1
+    lightningcss-freebsd-x64: 1.30.1
+    lightningcss-linux-arm-gnueabihf: 1.30.1
+    lightningcss-linux-arm64-gnu: 1.30.1
+    lightningcss-linux-arm64-musl: 1.30.1
+    lightningcss-linux-x64-gnu: 1.30.1
+    lightningcss-linux-x64-musl: 1.30.1
+    lightningcss-win32-arm64-msvc: 1.30.1
+    lightningcss-win32-x64-msvc: 1.30.1
+  dependenciesMeta:
+    lightningcss-darwin-arm64:
+      optional: true
+    lightningcss-darwin-x64:
+      optional: true
+    lightningcss-freebsd-x64:
+      optional: true
+    lightningcss-linux-arm-gnueabihf:
+      optional: true
+    lightningcss-linux-arm64-gnu:
+      optional: true
+    lightningcss-linux-arm64-musl:
+      optional: true
+    lightningcss-linux-x64-gnu:
+      optional: true
+    lightningcss-linux-x64-musl:
+      optional: true
+    lightningcss-win32-arm64-msvc:
+      optional: true
+    lightningcss-win32-x64-msvc:
+      optional: true
+  checksum: cda1e15c2060ffcf8b07c2bf5489eb108a3c836c4d90c3afda7669114099b83fa0b1f28e4db380eb4cd1e7e071b06897bda82379e5981ba15258dc3103ecf507
   languageName: node
   linkType: hard
 
@@ -8857,7 +8974,7 @@ __metadata:
     react-native-gesture-handler: ~2.24.0
     react-native-keyboard-aware-scroll-view: ^0.9.5
     react-native-reanimated: ~3.17.4
-    react-native-safe-area-context: ^4.11.0
+    react-native-safe-area-context: latest
     react-native-screens: ~4.11.1
     react-native-size-matters: ^0.4.2
     react-native-svg: ^15.12.0
@@ -10420,15 +10537,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-css-interop@npm:0.2.1":
-  version: 0.2.1
-  resolution: "react-native-css-interop@npm:0.2.1"
+"react-native-css-interop@npm:0.1.22":
+  version: 0.1.22
+  resolution: "react-native-css-interop@npm:0.1.22"
   dependencies:
     "@babel/helper-module-imports": ^7.22.15
     "@babel/traverse": ^7.23.0
     "@babel/types": ^7.23.0
     debug: ^4.3.7
-    lightningcss: ~1.27.0
+    lightningcss: ^1.27.0
     semver: ^7.6.3
   peerDependencies:
     react: ">=18"
@@ -10440,7 +10557,7 @@ __metadata:
       optional: true
     react-native-svg:
       optional: true
-  checksum: a332a13fa97a562c0ffe833f7c2094eb27dbf0354ad6addae4f8b5587d82fc4e6e9191b32e5a75b5e48ba8f69e13f4cbe9860ec7ec1015c70626f4233514e373
+  checksum: b86b44620c8d572e58fb860b14dc271e492d76f1050fe649b59c5451fe96ceaf81fb472f0ff37ca29c83f022d07b428be5f57ffd50a68678fb8145c11b03b03e
   languageName: node
   linkType: hard
 
@@ -10540,13 +10657,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-safe-area-context@npm:^4.11.0":
-  version: 4.14.1
-  resolution: "react-native-safe-area-context@npm:4.14.1"
+react-native-safe-area-context@latest:
+  version: 5.6.1
+  resolution: "react-native-safe-area-context@npm:5.6.1"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: acf94ea2a30a3ec5594b467f8e0942ac48c10cbb5d34d16beba33cc0052f7c82dfd6ace754fa55f41d55143f134d3d3fa908eaf4cc9dec5743d6c4483b23520a
+  checksum: f346615d5f8f26c0c8459d29c149ea3f66684b8ae79cea6fd48d118d039851a69a92955d67b455d0e7ab46639155c4357ebf58ec1859b2377ee459e2a04b602b
   languageName: node
   linkType: hard
 
