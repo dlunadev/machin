@@ -10,7 +10,7 @@ import { sign_in_schema } from '@/src/utils/schemas/auth/login.schema';
 import { RelativePathString, useRouter } from 'expo-router';
 import { Formik } from 'formik';
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
 
 // Crear un singleton
 const { sign_in } = new AuthSupabaseAdapter();
@@ -21,6 +21,7 @@ function SignIn() {
   const { showToast } = useCustomToast();
 
   const handleSignIn = async (values: { email: string; password: string }) => {
+    Keyboard.dismiss();
     try {
       setLoading(true);
 

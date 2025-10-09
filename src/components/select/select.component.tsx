@@ -1,3 +1,4 @@
+import { ChevronDown } from '@/assets/svg';
 import { Colors } from '@/src/constants/Colors';
 import { dimensions } from '@/src/helpers/get-dimensions';
 import { useInsets } from '@/src/hooks/utils/useInsets';
@@ -5,7 +6,6 @@ import React, { useState } from 'react';
 import { ActivityIndicator, FlatList, KeyboardAvoidingView, Platform, View } from 'react-native';
 import { Input } from '../input/input.component';
 import { Text } from '../text/text.component';
-import { ChevronDownIcon } from '../ui/icon';
 import {
   Select as GSelect,
   SelectBackdrop,
@@ -36,7 +36,7 @@ export const Select = (props: SelectProps) => {
     <GSelect onValueChange={handleValueChange} selectedValue={selected} style={[{ width: dimensions.width - 50 }]} >
       <SelectTrigger style={styles.trigger}>
         <SelectInput placeholder={placeholder} style={styles.input} />
-        {loading ? <ActivityIndicator size={16} style={styles.loadingIcon} /> : <SelectIcon as={ChevronDownIcon} />}
+        {loading ? <ActivityIndicator size={16} style={styles.loadingIcon} /> : <SelectIcon as={ChevronDown} />}
       </SelectTrigger>
 
       <SelectPortal>
