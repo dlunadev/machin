@@ -1,8 +1,9 @@
+import { Check } from '@/assets/svg';
 import { Client } from '@/sdk/domain/client/client.entity';
 import { Zone } from '@/sdk/domain/zone/zone.entity';
 import { ShiftStatus } from '@/sdk/utils/enum/shift-status';
 import { WebhookShift } from '@/sdk/utils/type/webhook-shift';
-import { ActionSheet, Button, CheckIcon, Container, Input, Modal, Text, VStack } from '@/src/components';
+import { ActionSheet, Button, Container, Input, Modal, Text, VStack } from '@/src/components';
 import { ShiftFinished } from '@/src/components/layouts/shift-finished/shift-finished.component';
 import { ShiftIdle } from '@/src/components/layouts/shift-idle/shift-idle.component';
 import { ShiftPaused } from '@/src/components/layouts/shift-paused/shift-paused.component';
@@ -167,7 +168,7 @@ export default function Home() {
               <Pressable className="p-2 flex-row items-center justify-between">
                 <Checkbox value={item.id.toString()} isChecked={!!clientsOrder.find((c) => c.client_id === item.id)} onChange={() => toggleClient(item)}>
                   <CheckboxIndicator>
-                    <CheckboxIcon as={CheckIcon} />
+                    <CheckboxIcon as={Check} />
                   </CheckboxIndicator>
                   <Text>{item.name}</Text>
                 </Checkbox>
