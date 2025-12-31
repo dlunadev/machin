@@ -13,6 +13,7 @@ export class ShiftUseCase implements ShiftRepository {
       data.seller_id,
       data.status
     );
+
     return this.repository.create(shift);
   }
 
@@ -32,7 +33,7 @@ export class ShiftUseCase implements ShiftRepository {
     return this.repository.delete(id);
   }
 
-  get_active_shifts(user_id: string): Promise<Shift> {
+  get_active_shifts(user_id: string): Promise<Shift | null> {
     return this.repository.get_active_shifts(user_id);
   }
 }
