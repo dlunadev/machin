@@ -64,26 +64,36 @@ export default function Home() {
   const finish_shift = async () => {
     setLoading(true);
 
-    const res = await fetch(`${API_URL}/shift/${shift?.id}`, { method: 'POST' });
+    try {
+      // ⏱️ Simula tiempo de red / procesamiento
+      // 🧪 Respuesta mockeada como si viniera del backend
+      setTimeout(() => {
+        const mockResponse: { data: WebhookShift } = {
+          data: {
+            shift_id: 12,
+            active_hours: 7.5,
+            total_distance: 42.3,
+            start_date: '2025-12-30',
+            end_date: '2025-12-30',
+            start_time: '09:00',
+            end_time: '16:30',
+          },
+        };
 
-    if (!res.ok) {
-      throw new Error(`HTTP error ${res.status}`);
+        setFinalizeShift(mockResponse.data);
+        setClientsOrder([]);
+        setShowSheet(false);
+        setState(ShiftStatus.FINISHED);
+        setSearchClient("");
+        mutate();
+        AsyncStorage.removeItem('shift_id');
+      }, 3000);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    } finally {
+      setLoading(false);
     }
-
-    const contentLength = res.headers.get('content-length');
-
-    if (res.status === 204 || contentLength === '0') {
-      console.warn('La API no devolvió contenido');
-      return;
-    }
-
-    const data = await res.json();
-
-    setFinalizeShift(data.data);
-    setClientsOrder([]);
-    setShowSheet(false);
-    mutate();
-    AsyncStorage.removeItem('shift_id');
   };
 
   useEffect(() => {

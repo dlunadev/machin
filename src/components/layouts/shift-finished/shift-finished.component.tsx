@@ -19,7 +19,7 @@ export const ShiftFinished = (
     state: ShiftStatus;
     setZone: React.Dispatch<React.SetStateAction<Zone | null>>;
     finalize_shift: WebhookShift;
-    user: Seller | undefined | null;
+    user: Partial<Seller> | undefined | null;
   }
 ) => {
   const { state, finalize_shift, user, setState, setZone } = props;

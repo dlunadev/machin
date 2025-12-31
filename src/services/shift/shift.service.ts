@@ -1,11 +1,15 @@
-import { ShiftClientAdapter } from "@/sdk/infraestructure/clients-shift/clients-shift.supabase";
-import { ShiftStatusAdapter } from "@/sdk/infraestructure/shift-status/shift-status.supabase";
-import { ShiftSupabaseAdapter } from "@/sdk/infraestructure/shift/supabase/shift.supabase";
+import { ShiftClientsUseCase } from "@/sdk/application/shift-clients/shift-clients.use-case";
+import { ShiftStatusUseCase } from "@/sdk/application/shift-status/shift-status.use-case";
+import { ShiftUseCase } from "@/sdk/application/shift/shift.use-case";
+import { ShiftClientMockAdapter, ShiftMockAdapter, ShiftStatusMockAdapter } from "@/sdk/infraestructure";
 
+const shift_mock = new ShiftMockAdapter();
+const shift_status_mock = new ShiftStatusMockAdapter();
+const shift_client_mock = new ShiftClientMockAdapter();
 
-const { create, update } = new ShiftSupabaseAdapter();
-const { create: create_status } = new ShiftStatusAdapter();
-const { create_clients_shift } = new ShiftClientAdapter();
+const service_shift = new ShiftUseCase(shift_mock);
+const service_shift_client  = new ShiftClientsUseCase(shift_client_mock);
+const service_shift_status = new ShiftStatusUseCase(shift_status_mock);
 
-export { create, create_clients_shift, create_status, update };
+export { service_shift, service_shift_client, service_shift_status };
 

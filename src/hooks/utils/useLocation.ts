@@ -44,7 +44,6 @@ async function checkAndroidPermissions(): Promise<boolean> {
   );
   const fgs = await PermissionsAndroid.check(FOREGROUND_SERVICE_LOCATION);
 
-  console.log('locations', fine, bg, fgs)
   if (fine && bg && fgs) return true;
 
   const fineReq = await PermissionsAndroid.request(
@@ -75,8 +74,6 @@ export const useLocation = (onLocationUpdate?: (coords: { latitude: number; long
   const [permissionGranted, setPermissionGranted] = useState(false);
   const watchId = useRef<number | null>(null);
   const appState = useRef<AppStateStatus>(AppState.currentState);
-
-  console.log(error)
 
   const openSettings = useCallback(() => {
     if (Platform.OS === "ios") {
