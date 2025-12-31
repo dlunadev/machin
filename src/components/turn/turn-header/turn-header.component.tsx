@@ -13,8 +13,6 @@ export const TurnHeader = (props: TurnHeaderProps) => {
   const { zone_id, title = 'Mi Turno', state, shift } = props;
   const { zone } = useZone(zone_id as string);
 
-  console.log(zone_id)
-
   return (
     <VStack className="mb-8 gap-2">
       <Text size={20} weight={600} color={Colors.PRIMARY} className="mb-3">

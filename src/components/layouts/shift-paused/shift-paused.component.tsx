@@ -2,8 +2,7 @@ import { Pause, Play, Square } from '@/assets/svg';
 import { ShiftStatus } from '@/sdk/utils/enum/shift-status';
 import { Colors } from '@/src/constants/Colors';
 import { useShiftActive } from '@/src/hooks/services';
-import { update } from '@/src/services/shift/shift.service';
-import React from 'react';
+import { service_shift_status } from '@/src/services/shift/shift.service';
 import { View } from 'react-native';
 import { TurnActions } from '../../turn/turn-actions/turn-actions.component';
 import { TurnContent } from '../../turn/turn-content/turn-content.component';
@@ -14,7 +13,6 @@ export const ShiftPaused = (props: ShiftProps) => {
   const { user, setState, setIsOpen } = props;
   const { active_shift: shift } = useShiftActive(user?.id);
 
-  console.log('paused', shift)
 
   return (
     <View className="flex flex-1 w-full gap-2">
@@ -31,7 +29,7 @@ export const ShiftPaused = (props: ShiftProps) => {
           label: 'Reanudar',
           onPress: () => {
             setState(ShiftStatus.RESUMED);
-            update(shift?.id as string, { status: ShiftStatus.RESUMED });
+            service_shift_status.update(shift?.id as string, { action: ShiftStatus.RESUMED });
           },
           outlined: true,
           icon: <Play color={Colors.BLACK} />,

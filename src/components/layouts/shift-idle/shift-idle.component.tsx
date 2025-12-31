@@ -3,7 +3,8 @@ import { Zone } from '@/sdk/domain/zone/zone.entity';
 import { ShiftStatus } from '@/sdk/utils/enum/shift-status';
 import { Colors } from '@/src/constants/Colors';
 import { useMe, useZones } from '@/src/hooks/services';
-import { create, create_status } from '@/src/services/shift/shift.service';
+import { useCustomToast } from '@/src/hooks/utils/useToast';
+import { service_shift, service_shift_status } from '@/src/services/shift/shift.service';
 import React, { useState } from 'react';
 import { Button } from '../../button/button.component';
 import { Select } from '../../select/select.component';
@@ -23,24 +24,35 @@ export const ShiftIdle = (props: ShiftIDLEProps) => {
   const [shiftLoader, setShiftLoader] = useState(false);
   const { user } = useMe();
   const { zones, isLoading, loadMore } = useZones(10, search);
+  const { showToast } = useCustomToast();
 
   const handleStart = async () => {
-    setShiftLoader(true);
-    if (!zone) return;
+    try {
+      setShiftLoader(true);
+      if (!zone) return;
 
-    const shift = await create({
-      seller_id: user?.id as string,
-      zone_id: zone?.id as string,
-    });
+      const shift = await service_shift.create({
+        seller_id: user?.id as string,
+        zone_id: zone?.id as string,
+        status: ShiftStatus.STARTED,
+      });
+      
+      await service_shift_status.create({
+        shift_id: shift.id as string,
+        action: ShiftStatus.STARTED,
+      });
 
-    await create_status({
-      shift_id: shift.id as string,
-      action: ShiftStatus.STARTED,
-    });
 
-    setShiftId(shift.id as string);
-    setState(ShiftStatus.STARTED);
-    setShiftLoader(false);
+      setShiftId(shift.id as string);
+      setState(ShiftStatus.STARTED);
+    } catch (error) {
+      showToast({
+        title: 'Ha ocurrido un error',
+        children: 'Ocurrió un error al iniciar el turno. Intente nuevamente en unos momentos.',
+      });
+    } finally {
+      setShiftLoader(false);
+    }
   };
 
   return (

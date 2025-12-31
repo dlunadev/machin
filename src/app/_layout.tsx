@@ -3,7 +3,7 @@ import { useFonts } from 'expo-font';
 import { Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { SWRConfig } from 'swr';
@@ -26,7 +26,6 @@ export default function RootLayout() {
       if (!loaded) return;
 
       const session = await restoreSession();
-
       if (!redirected) {
         setRedirected(true);
 

@@ -6,5 +6,5 @@ export type TurnHeaderProps = {
   zone_id: string | Zone | null;
   title?: string;
   state?: ShiftStatus;
-  shift: Shift | undefined;
+  shift: Shift | null;
 }

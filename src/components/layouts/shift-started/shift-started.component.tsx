@@ -3,7 +3,7 @@ import { Seller } from '@/sdk/domain/seller/seller.entity';
 import { ShiftStatus } from '@/sdk/utils/enum/shift-status';
 import { Colors } from '@/src/constants/Colors';
 import { useShiftActive } from '@/src/hooks/services';
-import { update } from '@/src/services/shift/shift.service';
+import { service_shift_status } from '@/src/services/shift/shift.service';
 import React from 'react';
 import { View } from 'react-native';
 import { TurnActions } from '../../turn/turn-actions/turn-actions.component';
@@ -20,8 +20,6 @@ export const ShiftStarted = (props: ShiftProps) => {
   const { user, setState, setIsOpen } = props;
   const { active_shift } = useShiftActive(user?.id);
 
-  console.log('shift_started', active_shift);
-
   return (
     <View className="flex flex-1 w-full gap-2">
       <TurnHeader zone_id={active_shift?.zone_id as string} shift={active_shift} />
@@ -37,7 +35,7 @@ export const ShiftStarted = (props: ShiftProps) => {
           label: 'Pausar',
           onPress: () => {
             setState(ShiftStatus.PAUSED);
-            update(active_shift?.id as string, { status: ShiftStatus.PAUSED });
+            service_shift_status.update(active_shift?.id as string, { action: ShiftStatus.PAUSED });
           },
           outlined: true,
           icon: <PauseIcon />,
