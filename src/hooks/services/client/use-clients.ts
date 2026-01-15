@@ -1,8 +1,10 @@
+import { ClientUseCase } from "@/sdk/application/client/client.use-case";
 import { Client } from "@/sdk/domain/client/client.entity";
-import { ClientSupabaseAdapter } from "@/sdk/infraestructure/client/client.supabase";
+import { ClientMockAdapter } from "@/sdk/infraestructure";
 import useSWRInfinite from "swr/infinite";
 
-const { find_all } = new ClientSupabaseAdapter();
+const mock = new ClientMockAdapter();
+const service = new ClientUseCase(mock);
 
 export const useClients = (page_size: number, search_term: string, zone_id?: string) => {
   const getKey = (pageIndex: number, previousPageData: Client[] | null) => {
@@ -16,7 +18,7 @@ export const useClients = (page_size: number, search_term: string, zone_id?: str
 
   const { data, error, isLoading, size, setSize } = useSWRInfinite(
     getKey,
-    (params) => find_all(params),
+    (params) => service.find_all(params),
     { revalidateFirstPage: true }
   );
 

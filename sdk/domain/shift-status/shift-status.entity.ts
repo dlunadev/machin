@@ -1,6 +1,5 @@
 import { ShiftStatus as ShiftStatusEnum } from "@/sdk/utils/enum/shift-status";
 
-
 export class ShiftStatusEntity {
   constructor(
     public action: ShiftStatusEnum,
