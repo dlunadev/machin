@@ -9,7 +9,6 @@ export function useRecoverySession() {
     const handleUrl = (url: string) => {
       try {
         const urlObj = new URL(url);
-        console.log("Deep link URL:", url);
 
         const type = urlObj.searchParams.get("type");
         const oobCode = urlObj.searchParams.get("oobCode");

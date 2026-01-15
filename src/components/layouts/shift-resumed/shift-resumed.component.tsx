@@ -2,7 +2,7 @@ import { PauseIcon, Resumed, Square } from '@/assets/svg';
 import { ShiftStatus } from '@/sdk/utils/enum/shift-status';
 import { Colors } from '@/src/constants/Colors';
 import { useShiftActive } from '@/src/hooks/services';
-import { update } from '@/src/services/shift/shift.service';
+import { service_shift_status } from '@/src/services/shift/shift.service';
 import React from 'react';
 import { View } from 'react-native';
 import { TurnActions } from '../../turn/turn-actions/turn-actions.component';
@@ -29,7 +29,7 @@ export const ShiftResumed = (props: ShiftProps) => {
           label: 'Pausar',
           onPress: () => {
             setState(ShiftStatus.PAUSED);
-            update(shift?.id as string, { status: ShiftStatus.PAUSED });
+            service_shift_status.update(shift?.id as string, { action: ShiftStatus.PAUSED });
           },
           outlined: true,
           icon: <PauseIcon />,
