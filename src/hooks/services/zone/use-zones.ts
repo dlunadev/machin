@@ -1,10 +1,10 @@
 import { ZoneUseCase } from "@/sdk/application/zone/zone.use-case";
 import { Zone } from "@/sdk/domain/zone/zone.entity";
-import { ZoneMockAdapter } from "@/sdk/infraestructure";
+import { ZoneSupabaseAdapter } from "@/sdk/infraestructure";
 import useSWRInfinite from "swr/infinite";
 
-const mock = new ZoneMockAdapter();
-const service = new ZoneUseCase(mock)
+const zone = new ZoneSupabaseAdapter();
+const service = new ZoneUseCase(zone)
 
 export const useZones = (page_size: number, search_term: string) => {
   const getKey = (pageIndex: number, previousPageData: Zone[] | null) => {

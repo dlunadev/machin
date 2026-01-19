@@ -4,7 +4,7 @@ import { Zone } from '@/sdk/domain/zone/zone.entity';
 import { ShiftStatus } from '@/sdk/utils/enum/shift-status';
 import { WebhookShift } from '@/sdk/utils/type/webhook-shift';
 import { formatDate, formatTime } from '@/src/helpers/date-formatter';
-import { useShiftActive } from '@/src/hooks/services';
+import { useShift } from '@/src/hooks/services';
 import React from 'react';
 import { View } from 'react-native';
 import { Button } from '../../button/button.component';
@@ -22,13 +22,15 @@ export const ShiftFinished = (
     user: Partial<Seller> | undefined | null;
   }
 ) => {
-  const { state, finalize_shift, user, setState, setZone } = props;
-  const { active_shift: shift } = useShiftActive(user?.id);
+  const { state, finalize_shift, setState, setZone } = props;
+  const { shift: shift } = useShift(finalize_shift.shift_id);
+
+  console.log(finalize_shift)
 
   return (
     <>
       <View className="flex flex-1 w-full gap-2">
-        <TurnHeader zone_id={shift?.zone_id as string} title="Resumen del dia" state={state} shift={shift} />
+        <TurnHeader zone_id={shift?.zone_id as string} title="Resumen del dia" state={state} shift={shift!} />
         <View className="flex-1">
           <View className="flex items-center justify-center mb-12">
             <Begin />

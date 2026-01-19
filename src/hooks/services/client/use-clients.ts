@@ -1,10 +1,10 @@
 import { ClientUseCase } from "@/sdk/application/client/client.use-case";
 import { Client } from "@/sdk/domain/client/client.entity";
-import { ClientMockAdapter } from "@/sdk/infraestructure";
+import { ClientSupabaseAdapter } from "@/sdk/infraestructure";
 import useSWRInfinite from "swr/infinite";
 
-const mock = new ClientMockAdapter();
-const service = new ClientUseCase(mock);
+const client = new ClientSupabaseAdapter();
+const service = new ClientUseCase(client);
 
 export const useClients = (page_size: number, search_term: string, zone_id?: string) => {
   const getKey = (pageIndex: number, previousPageData: Client[] | null) => {

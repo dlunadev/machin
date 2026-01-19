@@ -9,6 +9,8 @@ export const useZone = (zone_id?: string) => {
     () => find_by_id(zone_id!),
   );
 
+  console.log('zone', data, zone_id);
+
   return {
     zone: data,
     isLoading,

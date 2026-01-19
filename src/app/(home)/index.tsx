@@ -11,6 +11,7 @@ import { ShiftResumed } from '@/src/components/layouts/shift-resumed/shift-resum
 import { ShiftStarted } from '@/src/components/layouts/shift-started/shift-started.component';
 import styles from '@/src/components/select/select.style';
 import { Checkbox, CheckboxIcon, CheckboxIndicator } from '@/src/components/ui/checkbox';
+import { Colors } from '@/src/constants/Colors';
 import { useClients, useMe, useShift, useShiftActive } from '@/src/hooks/services';
 import { useInsets } from '@/src/hooks/utils/useInsets';
 import { useLocation } from '@/src/hooks/utils/useLocation';
@@ -19,7 +20,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, AppState, AppStateStatus, FlatList, Pressable, View } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const API_URL = Constants?.expoConfig?.extra?.API_URL;
 
@@ -61,10 +61,13 @@ export default function Home() {
     });
   };
 
-  const finish_shift = async () => {
+ const finish_shift = async () => {
+  try {
     setLoading(true);
 
-    const res = await fetch(`${API_URL}/shift/${shift?.id}`, { method: 'POST' });
+    const res = await fetch(`${API_URL}/shift/${shift?.id}`, {
+      method: 'POST',
+    });
 
     if (!res.ok) {
       throw new Error(`HTTP error ${res.status}`);
@@ -83,8 +86,14 @@ export default function Home() {
     setClientsOrder([]);
     setShowSheet(false);
     mutate();
-    AsyncStorage.removeItem('shift_id');
-  };
+    await AsyncStorage.removeItem('shift_id');
+  } catch (error) {
+    console.error('Error al finalizar el turno:', error);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   useEffect(() => {
     if (active_shift?.id) {
