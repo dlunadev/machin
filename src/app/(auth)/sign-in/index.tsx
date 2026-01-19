@@ -1,6 +1,6 @@
 import { Machin } from '@/assets/svg';
 import { AuthUseCase } from '@/sdk/application';
-import { AuthMockAdapter } from '@/sdk/infraestructure';
+import { AuthSupabaseAdapter } from '@/sdk/infraestructure';
 import { Button, Container, Input, KeyboardContainer } from '@/src/components';
 import { Text } from '@/src/components/text/text.component';
 import { Center } from '@/src/components/ui/center';
@@ -14,8 +14,8 @@ import React, { useState } from 'react';
 import { Keyboard, View } from 'react-native';
 
 // Crear un singleton
-const mock = new AuthMockAdapter();
-const service = new AuthUseCase(mock);
+const auth = new AuthSupabaseAdapter();
+const service = new AuthUseCase(auth);
 
 function SignIn() {
   const router = useRouter();

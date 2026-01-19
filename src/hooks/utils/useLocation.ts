@@ -149,5 +149,7 @@ export const useLocation = (onLocationUpdate?: (coords: { latitude: number; long
     return () => subscription.remove();
   }, [permissionGranted, startTracking]);
 
+  console.log(location, error, modalShown)
+
   return { location, error, modalShown, openSettings };
 };

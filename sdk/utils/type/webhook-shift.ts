@@ -1,5 +1,5 @@
 export type WebhookShift = {
-  shift_id: number;
+  shift_id: string;
   active_hours: number;
   total_distance: number;
   start_date: string;
