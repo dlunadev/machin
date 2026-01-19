@@ -171,6 +171,15 @@ cd android
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
 ```
 
+También es necesario agregar el servicio de background actions dentro del tag `<application>` en el `AndroidManifest.xml`:
+
+```xml
+<service
+    android:name="com.asterinet.react.bgactions.RNBackgroundActionsTask"
+    android:exported="false"
+    android:foregroundServiceType="location" />
+```
+
 ---
 
 ## 📌 Roadmap
