@@ -69,8 +69,19 @@ export default function Home() {
       method: 'POST',
     });
 
-    if (!res.ok) {
-      throw new Error(`HTTP error ${res.status}`);
+        setFinalizeShift(mockResponse.data);
+        setClientsOrder([]);
+        setShowSheet(false);
+        setState(ShiftStatus.FINISHED);
+        setSearchClient("");
+        mutate();
+        AsyncStorage.removeItem('shift_id');
+      }, 3000);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    } finally {
+      setLoading(false);
     }
 
     const contentLength = res.headers.get('content-length');
