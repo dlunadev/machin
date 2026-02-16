@@ -1,0 +1,1 @@
+export type ShiftState = "idle" | "started" | "paused" | "resumed" | "completed";
