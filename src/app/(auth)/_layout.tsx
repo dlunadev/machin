@@ -1,4 +1,4 @@
-import { AuthRoutesKey } from '@/src/shared/utils/enum/routes';
+import { AuthRoutesKey } from '@/src/features/shared/utils/routes';
 import { Stack } from 'expo-router';
 import React from 'react';
 

@@ -1,4 +1,4 @@
-import { AuthRoutes } from '@/src/shared/utils/enum/routes';
+import { AuthRoutes } from '@/src/features/shared/utils/routes';
 import { RelativePathString, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ConfirmationState } from '../model';

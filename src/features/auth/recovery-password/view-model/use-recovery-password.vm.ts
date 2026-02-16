@@ -1,5 +1,5 @@
+import { AuthRoutes } from '@/src/features/shared/utils/routes';
 import { toastService } from '@/src/shared/services';
-import { AuthRoutes } from '@/src/shared/utils/enum/routes';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Keyboard } from 'react-native';

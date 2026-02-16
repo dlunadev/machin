@@ -6,8 +6,8 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import '../../global.css';
+import { AuthRoutes, HomeRoutes } from '../features/shared/utils/routes';
 import Providers from '../shared/providers/app.provider';
-import { AuthRoutes, HomeRoutes } from '../shared/utils/enum/routes';
 
 SplashScreen.preventAutoHideAsync();
 

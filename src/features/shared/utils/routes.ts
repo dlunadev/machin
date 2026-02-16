@@ -6,10 +6,6 @@ export enum AuthRoutes {
   'NEW_PASSWORD' = '/(auth)/password/new-password'
 }
 
-export enum HomeRoutes {
-  HOME = '/(home)'
-}
-
 export enum AuthRoutesKey {
   SIGN_IN = "index",
   RECOVERY_PASSWORD = "password/recovery-password/index",
@@ -17,3 +13,8 @@ export enum AuthRoutesKey {
   CONFIRMATION = "password/confirmation/index",
   NEW_PASSWORD = "password/new-password/index",
 }
+
+export enum HomeRoutes {
+  HOME = '/(home)'
+}
+

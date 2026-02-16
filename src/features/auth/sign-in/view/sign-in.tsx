@@ -1,9 +1,9 @@
 import { Machin } from '@/assets/svg';
+import { AuthRoutes } from '@/src/features/shared/utils/routes';
 import { Button, Container, Input, KeyboardContainer } from '@/src/shared/components';
 import { Text } from '@/src/shared/components/text/text.component';
 import { Center } from '@/src/shared/components/ui/center';
 import { Colors } from '@/src/shared/constants/Colors';
-import { AuthRoutes } from '@/src/shared/utils/enum/routes';
 import { RelativePathString, router } from 'expo-router';
 import React from 'react';
 import { View } from 'react-native';

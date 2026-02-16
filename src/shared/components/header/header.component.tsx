@@ -1,12 +1,12 @@
 import { Logout, Machin } from '@/assets/svg';
 import { sign_out } from '@/sdk/services/auth/auth';
-import { useInsets } from '@/src/shared//hooks/utils/useInsets';
-import { AuthRoutes } from '@/src/shared//utils/enum/routes';
+import { AuthRoutes } from '@/src/features/shared/utils/routes';
 import { Colors } from '@/src/shared/constants/Colors';
 import { scaleSize } from '@/src/shared/helpers/scale-size';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, View } from 'react-native';
+import { useInsets } from '../../hooks/utils/useInsets';
 import { HStack } from '../ui/hstack';
 
 export const Header = () => {
