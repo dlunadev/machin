@@ -1,18 +1,17 @@
-import { LocationAdapter } from "@/sdk/infraestructure/location/location.supabase";
+import { location_service } from "@/src/features/home/domain/services/home.services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AppState, AppStateStatus, Linking, Permission, PermissionsAndroid, Platform } from "react-native";
 import BackgroundService from "react-native-background-actions";
 import Geolocation from "react-native-geolocation-service";
 
-const { create: create_location } = new LocationAdapter();
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function sendLocation(latitude: number, longitude: number, accuracy: number) {
   const shift_id = (await AsyncStorage.getItem("shift_id")) || "";
   if (!shift_id) return;
   try {
-    await create_location({ shift_id, latitude, longitude, accuracy });
+    await location_service.create({ shift_id, latitude, longitude, accuracy });
   } catch (err) {
     console.error("[BG_LOCATION] Error enviando ubicación:", err);
   }
