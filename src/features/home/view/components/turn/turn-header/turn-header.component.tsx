@@ -1,8 +1,8 @@
 import { Calendar, Clock, Pin } from '@/assets/svg';
 import { ShiftStatus } from '@/sdk/utils/enum/shift-status';
+import { useZone } from '@/src/features/home/hooks';
 import { HStack, Text, VStack } from '@/src/shared/components';
 import { Colors } from '@/src/shared/constants/Colors';
-import { useZone } from '@/src/shared/hooks/services';
 import dayjs from 'dayjs';
 import { View } from 'react-native';
 import { TurnHeaderProps } from './turn-header.type';

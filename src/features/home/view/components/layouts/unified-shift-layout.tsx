@@ -2,6 +2,7 @@ import { Begin, Calendar, Clock, Pause, PauseIcon, Play, Resumed, Shift as Shift
 import { Zone } from '@/sdk/domain/zone/zone.entity';
 import { ShiftStatus } from '@/sdk/utils/enum/shift-status';
 import { WebhookShift } from '@/sdk/utils/type/webhook-shift';
+import { useZones } from '@/src/features/home/hooks';
 import { Button } from '@/src/shared/components/button/button.component';
 import { Select } from '@/src/shared/components/select/select.component';
 import { InfoBlock } from '@/src/shared/components/summary/info.component';
@@ -14,7 +15,6 @@ import { HStack } from '@/src/shared/components/ui/hstack';
 import { VStack } from '@/src/shared/components/ui/vstack';
 import { Colors } from '@/src/shared/constants/Colors';
 import { formatDate, formatTime } from '@/src/shared/helpers/date-formatter';
-import { useZones } from '@/src/shared/hooks/services';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { Shift, User } from '../../../model';

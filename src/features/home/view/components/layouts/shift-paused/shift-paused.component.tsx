@@ -1,8 +1,8 @@
 import { Pause, Play, Square } from '@/assets/svg';
 import { ShiftStatus } from '@/sdk/utils/enum/shift-status';
+import { useShiftActive } from '@/src/features/home/hooks';
 import { User } from '@/src/features/home/model';
 import { Colors } from '@/src/shared/constants/Colors';
-import { useShiftActive } from '@/src/shared/hooks/services';
 import { View } from 'react-native';
 import { TurnActions } from '../../turn/turn-actions/turn-actions.component';
 import { TurnContent } from '../../turn/turn-content/turn-content.component';
