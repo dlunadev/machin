@@ -1,10 +1,10 @@
 import { Zone } from '@/sdk/domain/zone/zone.entity';
 import { ShiftStatus } from '@/sdk/utils/enum/shift-status';
 import { toastService } from '@/src/shared/services';
-import { service_shift, service_shift_status } from '@/src/shared/services/shift/shift.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { shift_service, shift_status_service } from '../../domain/services/home.services';
 import { HomeState } from '../../model';
 
 const API_URL = Constants?.expoConfig?.extra?.API_URL;
@@ -33,13 +33,13 @@ export const useShiftViewModel = (
     setStartingShift(true);
 
     try {
-      const newShift = await service_shift.create({
+      const newShift = await shift_service.create({
         seller_id: userId,
         zone_id: zone.id,
         status: ShiftStatus.STARTED,
       });
 
-      await service_shift_status.create({
+      await shift_status_service.create({
         shift_id: newShift.id as string,
         action: ShiftStatus.STARTED,
       });
@@ -49,8 +49,6 @@ export const useShiftViewModel = (
         shiftId: newShift.id as string,
         shiftStatus: ShiftStatus.STARTED,
       }));
-
-      toastService.success('Turno iniciado correctamente', 'Éxito');
     } catch (error: any) {
       toastService.error(
         error.message || 'Ocurrió un error al iniciar el turno. Intente nuevamente.',
@@ -66,10 +64,10 @@ export const useShiftViewModel = (
 
     try {
       await Promise.all([
-        service_shift.update(shiftId, {
+        shift_service.update(shiftId, {
           status: newStatus,
         }),
-        service_shift_status.update(shiftId, {
+        shift_status_service.update(shiftId, {
           action: newStatus,
         })
       ]);
@@ -122,8 +120,6 @@ export const useShiftViewModel = (
         isSheetOpen: false,
         isLoading: false,
       }));
-
-      toastService.success('Turno finalizado correctamente', 'Éxito');
 
       mutate();
       await AsyncStorage.removeItem('shift_id');

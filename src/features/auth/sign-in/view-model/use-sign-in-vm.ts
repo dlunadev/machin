@@ -1,9 +1,10 @@
-import { authService, toastService } from '@/src/shared/services';
+import { toastService } from '@/src/shared/services';
 import { HomeRoutes } from '@/src/shared/utils/enum/routes';
 import { RelativePathString, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Keyboard } from 'react-native';
 import { mapAuthError } from '../../domain/mappers/auth-error.mapper';
+import { service } from '../../domain/services/auth.services';
 import { useSignInForm } from '../form/hook/use-sign-in.form';
 import { SignInFormValues } from '../form/schema/sign-in.schema';
 import { SignInState } from '../model';
@@ -20,7 +21,7 @@ export const useSignInViewModel = () => {
     setState({ isLoading: true });
 
     try {
-      const response = await authService.sign_in(email, password);
+      const response = await service.sign_in(email, password);
       if (response.error) {
         const errorInfo = mapAuthError(response.error);
 
@@ -41,6 +42,8 @@ export const useSignInViewModel = () => {
       toastService.error(errorInfo.message, errorInfo.title);
 
       return false;
+    } finally {
+      setState({ isLoading: false })
     }
   };
 

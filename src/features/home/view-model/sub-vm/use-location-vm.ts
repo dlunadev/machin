@@ -1,11 +1,11 @@
-import { useLocation } from '@/src/shared/hooks/utils/useLocation';
-import { create_location } from '@/src/shared/services/location/location.service';
 import { ShiftStatus } from '@/sdk/utils/enum/shift-status';
+import { location_service } from '../../domain/services/home.services';
+import { useLocation } from '../../hooks/location/useLocation';
 
 export const useLocationViewModel = (shiftId: string | null, shift: any) => {
   const { location, modalShown, openSettings } = useLocation((coords) => {
     if (shiftId && shift?.status !== ShiftStatus.FINISHED) {
-      create_location({
+      location_service.create({
         shift_id: shiftId,
         latitude: coords.latitude,
         longitude: coords.longitude,

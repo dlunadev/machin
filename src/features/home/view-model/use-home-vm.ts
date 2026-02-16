@@ -1,5 +1,5 @@
 import { ShiftStatus } from '@/sdk/utils/enum/shift-status';
-import { useMe, useShift, useShiftActive } from '@/src/shared/hooks/services';
+import { useMe, useShift, useShiftActive } from '@/src/features/home/hooks';
 import { useEffect, useState } from 'react';
 import { AppState } from 'react-native';
 import { HomeState, initialHomeState } from '../model';

@@ -1,6 +1,6 @@
-import { Client, ClientSelectionState, initialClientSelectionState } from '../../model/client.model';
+import { useClients } from '@/src/features/home/hooks';
 import { useState } from 'react';
-import { useClients } from '@/src/shared/hooks/services';
+import { Client, ClientSelectionState, initialClientSelectionState } from '../../model/client.model';
 
 export const useClientViewModel = (zoneId?: string) => {
   const [selectionState, setSelectionState] = useState<ClientSelectionState>(

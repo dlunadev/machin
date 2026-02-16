@@ -1,11 +1,9 @@
-import { AuthSupabaseAdapter } from '@/sdk/infraestructure';
 import { toastService } from '@/src/shared/services';
 import { useRoute } from '@react-navigation/native';
 import { useState } from 'react';
+import { service } from '../../domain/services/auth.services';
 import { useTimer } from '../hooks/use-timer';
 import { SendEmailState } from '../model';
-
-const { recovery_password } = new AuthSupabaseAdapter();
 
 export const useSendEmailViewModel = () => {
   const params = useRoute().params as { email?: string };
@@ -19,7 +17,7 @@ export const useSendEmailViewModel = () => {
 
   const resendEmail = async () => {
     try {
-      await recovery_password(state.email);
+      await service.recovery_password(state.email);
 
       toastService.success('Revisa tu bandeja de entrada', 'Correo enviado');
 

@@ -1,8 +1,9 @@
-import { authService, toastService } from '@/src/shared/services';
+import { toastService } from '@/src/shared/services';
 import { AuthRoutes } from '@/src/shared/utils/enum/routes';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Keyboard } from 'react-native';
+import { service } from '../../domain/services/auth.services';
 import { useRecoveryPasswordForm } from '../form/hook/use-recovery-password.form';
 import { mapAuthError, RecoveryState } from '../model';
 
@@ -18,8 +19,7 @@ export const useRecoveryPasswordVM = () => {
     setState({ isLoading: true });
 
     try {
-      const data = await authService.recovery_password(email);
-      console.log('recovery', data);
+      await service.recovery_password(email);
       router.push({
         pathname: AuthRoutes.SEND_EMAIL,
         params: { email: email },

@@ -1,9 +1,11 @@
-import { authService, toastService } from '@/src/shared/services';
+import { toastService } from '@/src/shared/services';
+import { AppError } from '@/src/shared/types/app-error';
 import { AuthRoutes } from '@/src/shared/utils/enum/routes';
 import { RelativePathString, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Keyboard } from 'react-native';
 import { mapAuthError } from '../../domain/mappers/auth-error.mapper';
+import { service } from '../../domain/services/auth.services';
 import { useNewPasswordForm } from '../form/hook/use-new-password.form';
 import { NewPasswordFormValues } from '../form/schema/new-password.schema';
 import { NewPasswordState } from '../model';
@@ -20,7 +22,7 @@ export const useNewPasswordViewModel = () => {
     setState({ isLoading: true });
 
     try {
-      const response = await authService.update_password(password);
+      const response = await service.update_password(password) as { error: AppError };
       if (response.error) {
         const errorInfo = mapAuthError(response.error);
         toastService.error(errorInfo.message, errorInfo.title);
