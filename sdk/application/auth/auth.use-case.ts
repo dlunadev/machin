@@ -17,7 +17,7 @@ export class AuthUseCase implements AuthRepository {
   recovery_password(email: string): Promise<{}> {
     return this.repository.recovery_password(email);
   }
-  update_password(password: string): Promise<{}> {
+  update_password(password: string): Promise<AuthResponse | {}> {
     return this.repository.update_password(password);
   }
 

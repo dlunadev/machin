@@ -1,16 +1,16 @@
 import { User } from "../user/user.entity";
 
-type AuthError = {
-  status: number,
-  code: string | {},
-  message: string,
+export interface Error {
+  message: string;
+  code: string | {};
+  status?: number;
 }
 
 export type AuthResponse = {
   data: {
     user: User | null;
   };
-  error: AuthError | null;
+  error: Error | null;
 };
 
 export interface AuthRepository {

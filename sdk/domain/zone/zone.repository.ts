@@ -1,3 +1,4 @@
+import { Repository } from "@/sdk/utils/interface/repository";
 import { Pagination } from "@/sdk/utils/type/pagination";
 import { Zone } from "./zone.entity";
 
@@ -14,6 +15,6 @@ import { Zone } from "./zone.entity";
 // }
 
 // export interface ZoneRepository extends Repository<Zone> {};
-export interface ZoneRepository {
+export interface ZoneRepository extends Repository<Zone>{
   get_zones: (data: Pagination) => Promise<Zone[]>;
 };

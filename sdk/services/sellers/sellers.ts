@@ -1,7 +1,7 @@
-import { Seller } from "@/sdk/domain/seller/seller.entity";
 import { supabase } from "@/sdk/supabase/config";
+import { User } from "@/src/features/home/model";
 
-export const get_seller_by_email = async (): Promise<Seller | null> => {
+export const get_seller_by_email = async (): Promise<User | null> => {
   const {
     data: { user },
     error: authError,
