@@ -5,11 +5,9 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { SWRConfig } from 'swr';
 import '../../global.css';
-import { GluestackUIProvider } from '../components/ui/gluestack-ui-provider';
-import { AuthRoutes, HomeRoutes } from '../utils/enum/routes';
+import Providers from '../shared/providers/app.provider';
+import { AuthRoutes, HomeRoutes } from '../shared/utils/enum/routes';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -47,23 +45,13 @@ export default function RootLayout() {
   }
 
   return (
-    <SWRConfig
-      value={{
-        revalidateOnFocus: true,
-        shouldRetryOnError: false,
-        dedupingInterval: 5000,
-      }}
-    >
-      <GluestackUIProvider mode="light">
-        <SafeAreaProvider>
-          <Stack initialRouteName="(auth)">
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="(home)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-          <StatusBar style="dark" />
-        </SafeAreaProvider>
-      </GluestackUIProvider>
-    </SWRConfig>
+    <Providers>
+      <Stack initialRouteName="(auth)">
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="(home)" options={{ headerShown: false }} />
+        <Stack.Screen name="+not-found" />
+      </Stack>
+      <StatusBar style="dark" />
+    </Providers>
   );
 }
