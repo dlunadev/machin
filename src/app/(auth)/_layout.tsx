@@ -1,8 +1,8 @@
-import { AuthRoutesKey } from '@/src/utils/enum/routes';
+import { AuthRoutesKey } from '@/src/shared/utils/enum/routes';
 import { Stack } from 'expo-router';
 import React from 'react';
 
-export default function _layout() {
+export default function AuthLayout() {
   return (
     <>
       <Stack screenOptions={{ headerShown: false }}>
