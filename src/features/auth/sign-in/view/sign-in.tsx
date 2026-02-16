@@ -47,6 +47,7 @@ function SignIn() {
                 value={form.values.password}
                 touched={form.touched.password}
                 error={form.touched.password && form.errors.password ? form.errors.password : undefined}
+                rightIcon
               />
             </View>
 
